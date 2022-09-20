@@ -74,4 +74,7 @@ public class TraineeController {
             return "No Records Found";
         }
     }
+    public void add() {
+
+    }
 }
