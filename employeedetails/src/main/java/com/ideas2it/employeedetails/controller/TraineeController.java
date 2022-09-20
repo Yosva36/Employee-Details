@@ -76,5 +76,6 @@ public class TraineeController {
     }
     public void add() {
 
+        System.out.println("I am in**********8");
     }
 }
