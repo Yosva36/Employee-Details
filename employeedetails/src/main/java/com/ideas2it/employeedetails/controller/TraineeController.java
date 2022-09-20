@@ -74,8 +74,4 @@ public class TraineeController {
             return "No Records Found";
         }
     }
-    public void add() {
-
-        System.out.println("I am in**********8");
-    }
 }
