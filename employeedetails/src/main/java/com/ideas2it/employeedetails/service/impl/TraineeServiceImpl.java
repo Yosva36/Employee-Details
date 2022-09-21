@@ -3,8 +3,10 @@ package com.ideas2it.employeedetails.service.impl;
 import com.ideas2it.employeedetails.dao.TraineeDao;
 import com.ideas2it.employeedetails.dto.TraineeDto;
 import com.ideas2it.employeedetails.entity.Trainee;
+import com.ideas2it.employeedetails.entity.Trainer;
 import com.ideas2it.employeedetails.helper.EmployeeHelper;
 import com.ideas2it.employeedetails.service.TraineeService;
+import com.ideas2it.employeedetails.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,12 @@ import java.util.stream.Collectors;
 public class TraineeServiceImpl implements TraineeService {
 
     private final TraineeDao traineeDao;
+    private final TrainerService trainerService;
 
     @Autowired
-    public TraineeServiceImpl(TraineeDao traineeDao){
-        this.traineeDao=traineeDao;
+    public TraineeServiceImpl(TraineeDao traineeDao, TrainerService trainerService){
+        this.traineeDao = traineeDao;
+        this.trainerService = trainerService;
     }
 
     /**
@@ -54,7 +58,7 @@ public class TraineeServiceImpl implements TraineeService {
         TraineeDto traineeDto = null;
         if (trainee.isPresent()) {
             traineeDto = EmployeeHelper.traineeToTraineeDto(trainee.get());
-           // traineeDto.setTrainersDto(EmployeeHelper.convertTrainerList(trainee.getTrainers()));
+            //traineeDto.setTrainersDto(EmployeeHelper.convertTrainerList(trainee.getTrainers()));
         }
         return traineeDto;
     }
@@ -76,22 +80,17 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
 
-//    public void associateTrainee(String traineeId, List<String> trainerIds) {
-//        TrainerDao trainerDao = new TrainerDaoImpl();
-//        Trainee trainee = traineeDao.searchTrainee(traineeId);
+//    public void associateTrainee(int traineeId, int trainerId) {
+//        Trainee trainee = traineeDao.findById(traineeId).get();
 //        if (trainee != null) {
-//            List<Trainer> trainers = new ArrayList<Trainer>();
-//            for (String s : trainerIds) {
-//                Trainer trainer = new Trainer();
-//                trainer = trainerDao.searchTrainer(s);
-//                if (trainer != null) {
+//            Optional<Trainer> trainer = EmployeeHelper.trainerDtoToTrainer(trainerService.getTrainerById(trainerId));
+//                if (trainer.isPresent()) {
 //                    trainers.add(trainer);
 //                }
 //            }
 //            trainee.setTrainers(trainers);
 //            traineeDao.updateTrainee(trainee);
 //        }
-//    }
 }
 
 

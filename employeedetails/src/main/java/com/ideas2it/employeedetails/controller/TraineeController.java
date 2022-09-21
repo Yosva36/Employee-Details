@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/trainees")
 public class TraineeController {
 
-    private TraineeService traineeService;
+    private final TraineeService traineeService;
 
     @Autowired
     public TraineeController(TraineeService traineeService){
@@ -24,11 +24,11 @@ public class TraineeController {
     }
 
     /*
-     * Get trainee details from client
+     * This method is used to get all
      * @param traineeDto
      */
     @PostMapping
-    public TraineeDto getTrainee(@RequestBody TraineeDto traineeDto){
+    public TraineeDto insertTrainee(@RequestBody TraineeDto traineeDto){
 
         return traineeService.setTrainee(traineeDto);
     }
