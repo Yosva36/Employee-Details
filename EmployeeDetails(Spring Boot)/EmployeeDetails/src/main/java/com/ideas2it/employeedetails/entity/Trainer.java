@@ -38,6 +38,12 @@ public class Trainer {
     @Column (name = "total_projects")
     private int totalProjectsDone;
 
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(name = "trainee_trainer",
+            joinColumns = {@JoinColumn (name = "trainer_id")},
+            inverseJoinColumns = { @JoinColumn(name = "trainee_id") })
+    private List<Trainee> trainees = new ArrayList<Trainee>();
+
     public Trainer() {
     }
 
@@ -142,6 +148,14 @@ public class Trainer {
 
     public void setTotalProjectsDone(int totalProjectsDone) {
         this.totalProjectsDone = totalProjectsDone;
+    }
+
+    public List<Trainee> getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(List<Trainee> trainees) {
+        this.trainees = trainees;
     }
 }
 

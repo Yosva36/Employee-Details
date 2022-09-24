@@ -4,6 +4,8 @@ import com.ideas2it.employeedetails.constants.EmployeeConstants;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  Deals with trainer dto
@@ -21,6 +23,8 @@ public class TrainerDto {
     private String mailId;
     private LocalDate dateOfJoin;
     private int totalProjectsDone;
+
+    private List<TraineeDto> traineesDto = new ArrayList<TraineeDto>();
 
     public int getId() {
         return id;
@@ -108,6 +112,14 @@ public class TrainerDto {
 
     public void setTotalProjectsDone(int totalProjectsDone) {
         this.totalProjectsDone = totalProjectsDone;
+    }
+
+    public List<TraineeDto> getTraineesDto() {
+        return traineesDto;
+    }
+
+    public void setTraineesDto(List<TraineeDto> traineesDto) {
+        this.traineesDto = traineesDto;
     }
 
     public String toString() {

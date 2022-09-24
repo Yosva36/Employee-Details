@@ -111,6 +111,16 @@ public class EmployeeHelper {
         }
         return traineesDto;
     }
+
+    public static List<TrainerDto> convertTrainerList(List<Trainer> trainers) {
+        List<TrainerDto> trainersDto = new ArrayList<>();
+        TrainerDto trainerDto = null;
+        for (Trainer trainer : trainers) {
+            trainerDto = trainerToTrainerDto(trainer);
+            trainersDto.add(trainerDto);
+        }
+        return trainersDto;
+    }
 }
 
     

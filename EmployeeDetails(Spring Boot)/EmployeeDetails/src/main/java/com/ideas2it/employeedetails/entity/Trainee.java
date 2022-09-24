@@ -43,6 +43,9 @@ public class Trainee {
     @Column (name = "task_completed")
     private String currentTask;
 
+    @ManyToMany(mappedBy="trainees")
+    private List<Trainer> trainers = new ArrayList<Trainer>();
+
     public Trainee(String traineeId, String name, String gender,
                    LocalDate dateOfBirth, String bloodGroup, long phoneNumber,
                    String mailId, String currentTask) {
@@ -133,5 +136,13 @@ public class Trainee {
 
     public void setCurrentTask(String currentTask) {
         this.currentTask = currentTask;
+    }
+
+    public List<Trainer> getTrainers() {
+        return trainers;
+    }
+
+    public void setTrainers(List<Trainer> trainers) {
+        this.trainers = trainers;
     }
 }

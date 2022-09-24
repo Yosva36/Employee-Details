@@ -3,12 +3,15 @@ package com.ideas2it.employeedetails.service.impl;
 import com.ideas2it.employeedetails.dao.TraineeDao;
 import com.ideas2it.employeedetails.dto.TraineeDto;
 import com.ideas2it.employeedetails.entity.Trainee;
+import com.ideas2it.employeedetails.entity.Trainer;
 import com.ideas2it.employeedetails.helper.EmployeeHelper;
 import com.ideas2it.employeedetails.service.TraineeService;
+import com.ideas2it.employeedetails.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,11 +19,12 @@ import java.util.stream.Collectors;
 /**
  * Deals with the trainee business logics.
  *
- **/
+ */
 @Service
 public class TraineeServiceImpl implements TraineeService {
 
     private final TraineeDao traineeDao;
+
 
     @Autowired
     public TraineeServiceImpl(TraineeDao traineeDao){
@@ -52,7 +56,10 @@ public class TraineeServiceImpl implements TraineeService {
         Optional<Trainee> trainee = traineeDao.findById(id);
         TraineeDto traineeDto = null;
         if (trainee.isPresent()) {
-            traineeDto = EmployeeHelper.traineeToTraineeDto(trainee.get());
+            Trainee presentTrainee = trainee.get();
+            traineeDto = EmployeeHelper.traineeToTraineeDto(presentTrainee);
+            traineeDto.setTrainersDto(EmployeeHelper.convertTrainerList(presentTrainee.getTrainers()));
+            return traineeDto;
         }
         return traineeDto;
     }
@@ -71,6 +78,11 @@ public class TraineeServiceImpl implements TraineeService {
      */ 
     public TraineeDto updateTrainee(TraineeDto traineeDto) {
         return EmployeeHelper.traineeToTraineeDto(traineeDao.save(EmployeeHelper.traineeDtoToTrainee(traineeDto)));
+    }
+
+    public Trainee getTraineeForTrainerService(int id) {
+        Optional<Trainee> trainee= traineeDao.findById(id);
+        return trainee.get();
     }
 }
 

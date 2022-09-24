@@ -1,12 +1,15 @@
 package com.ideas2it.employeedetails.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.ideas2it.employeedetails.entity.Trainee;
 import com.ideas2it.employeedetails.entity.Trainer;
 import com.ideas2it.employeedetails.dto.TrainerDto;
 import com.ideas2it.employeedetails.dao.TrainerDao;
+import com.ideas2it.employeedetails.service.TraineeService;
 import com.ideas2it.employeedetails.service.TrainerService;
 import com.ideas2it.employeedetails.helper.EmployeeHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +19,21 @@ import org.springframework.stereotype.Service;
 /**
  * Deals with the trainee business logics.
  *
- **/
+ */
 @Service
 public class TrainerServiceImpl implements TrainerService {
+
+    private final TrainerDao trainerDao;
+
+    private final TraineeService traineeService;
+
     @Autowired
-    TrainerDao trainerDao;
+    public TrainerServiceImpl(TrainerDao trainerDao, TraineeService traineeService) {
+        this.trainerDao = trainerDao;
+        this.traineeService = traineeService;
+    }
+
+
 
     /**
      * This method is used to set trainerDto objects to trainee.
@@ -43,12 +56,15 @@ public class TrainerServiceImpl implements TrainerService {
      * @return trainerDto
      */
     public TrainerDto getTrainerById(int id) {
-        Optional<Trainer> trainer= trainerDao.findById(id);
+        Optional<Trainer> trainer = trainerDao.findById(id);
         TrainerDto trainerDto = null;
         if (trainer.isPresent()) {
-            trainerDto = EmployeeHelper.trainerToTrainerDto(trainer.get());
+            Trainer presentTrainer = trainer.get();
+            trainerDto = EmployeeHelper.trainerToTrainerDto(presentTrainer);
+            trainerDto.setTraineesDto(EmployeeHelper.convertTraineeList(presentTrainer.getTrainees()));
+            return trainerDto;
         }
-        return null;
+        return trainerDto;
     }
 
     /**
@@ -66,6 +82,21 @@ public class TrainerServiceImpl implements TrainerService {
      */
     public TrainerDto updateTrainer(TrainerDto trainerDto) {
         return EmployeeHelper.trainerToTrainerDto(trainerDao.save(EmployeeHelper.trainerDtoToTrainer(trainerDto)));
+    }
+
+    @Override
+    public void associateTrainerToTrainees(int trainerId, int traineeId) {
+        Trainer trainer = trainerDao.findById(trainerId).get();
+        List<Trainee> trainees = new ArrayList<>();
+        if (trainer != null) {
+            Trainee trainee = new Trainee();
+            trainee = traineeService.getTraineeForTrainerService(traineeId);
+            if (trainee != null) {
+                trainees.add(trainee);
+            }
+        }
+        trainer.setTrainees(trainees);
+        trainerDao.save(trainer);
     }
 }
 

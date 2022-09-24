@@ -72,4 +72,5 @@ public class TraineeController {
             return "No Records Found";
         }
     }
+
 }

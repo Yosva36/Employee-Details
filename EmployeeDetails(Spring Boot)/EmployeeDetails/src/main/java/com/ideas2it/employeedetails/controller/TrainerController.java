@@ -71,4 +71,15 @@ public class TrainerController {
             return "Not Deleted";
         }
     }
+
+    @PostMapping("/{trainerId}/{traineeId}")
+    private void associateTrainerToTrainees(@PathVariable int trainerId, @PathVariable int traineeId) {
+        trainerService.associateTrainerToTrainees(trainerId, traineeId);
+    }
+
+    @GetMapping("/check")
+    @CrossOrigin()
+    public String check(){
+        return "Success";
+    }
 }
