@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.ideas2it.employeedetails.entity.Trainee;
 import com.ideas2it.employeedetails.entity.Trainer;
 import com.ideas2it.employeedetails.dto.TrainerDto;
-import com.ideas2it.employeedetails.dao.TrainerDao;
+import com.ideas2it.employeedetails.dao.TrainerRepo;
 import com.ideas2it.employeedetails.service.TraineeService;
 import com.ideas2it.employeedetails.service.TrainerService;
 import com.ideas2it.employeedetails.helper.EmployeeHelper;
@@ -23,12 +23,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class TrainerServiceImpl implements TrainerService {
 
-    private final TrainerDao trainerDao;
+    private final TrainerRepo trainerDao;
 
     private final TraineeService traineeService;
 
     @Autowired
-    public TrainerServiceImpl(TrainerDao trainerDao, TraineeService traineeService) {
+    public TrainerServiceImpl(TrainerRepo trainerDao, TraineeService traineeService) {
         this.trainerDao = trainerDao;
         this.traineeService = traineeService;
     }
@@ -39,6 +39,7 @@ public class TrainerServiceImpl implements TrainerService {
      * This method is used to set trainerDto objects to trainee.
      * @param trainerDto
      */
+    @Override
     public TrainerDto setTrainer(TrainerDto trainerDto) {
         return EmployeeHelper.trainerToTrainerDto(trainerDao.save(EmployeeHelper.trainerDtoToTrainer(trainerDto)));
     }
@@ -47,6 +48,7 @@ public class TrainerServiceImpl implements TrainerService {
      * This method is used to get all trainer details from database.
      * @return List<TrainerDto>
      */
+    @Override
     public List<TrainerDto> getTrainers() {
         return trainerDao.findAll().stream().map(EmployeeHelper::trainerToTrainerDto).collect(Collectors.toList());
     }
@@ -55,6 +57,7 @@ public class TrainerServiceImpl implements TrainerService {
      * This method is used to get a trainee details by id.
      * @return trainerDto
      */
+    @Override
     public TrainerDto getTrainerById(int id) {
         Optional<Trainer> trainer = trainerDao.findById(id);
         TrainerDto trainerDto = null;
@@ -72,6 +75,7 @@ public class TrainerServiceImpl implements TrainerService {
      * @param id
      * @return boolean
      */
+    @Override
     public void deleteTrainer(int id) throws EmptyResultDataAccessException {
         trainerDao.deleteById(id);
     }
@@ -80,23 +84,29 @@ public class TrainerServiceImpl implements TrainerService {
      * This method is used to update trainer details by id.
      * @param trainerDto
      */
+    @Override
     public TrainerDto updateTrainer(TrainerDto trainerDto) {
         return EmployeeHelper.trainerToTrainerDto(trainerDao.save(EmployeeHelper.trainerDtoToTrainer(trainerDto)));
     }
 
     @Override
     public void associateTrainerToTrainees(int trainerId, int traineeId) {
-        Trainer trainer = trainerDao.findById(trainerId).get();
+        Optional<Trainer> trainer = trainerDao.findById(trainerId);
         List<Trainee> trainees = new ArrayList<>();
-        if (trainer != null) {
-            Trainee trainee = new Trainee();
-            trainee = traineeService.getTraineeForTrainerService(traineeId);
+        Trainer presentTrainer = null;
+        if (trainer.isPresent()) {
+            presentTrainer = trainer.get();
+            Trainee trainee = traineeService.getTraineeForTrainerService(traineeId);
             if (trainee != null) {
                 trainees.add(trainee);
             }
         }
-        trainer.setTrainees(trainees);
-        trainerDao.save(trainer);
+        if (presentTrainer != null) {
+            presentTrainer.setTrainees(trainees);
+        }
+        if (presentTrainer != null) {
+            trainerDao.save(presentTrainer);
+        }
     }
 }
 

@@ -15,7 +15,8 @@ public class EmployeeFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        LOGGER.info("Through filter");
+        LOGGER.info("Specific url");
         filterChain.doFilter(servletRequest,servletResponse);
     }
 }
+

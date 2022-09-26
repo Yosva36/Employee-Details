@@ -1,11 +1,13 @@
 package com.ideas2it.employeedetails.controller;
 
 import com.ideas2it.employeedetails.dto.TraineeDto;
+import com.ideas2it.employeedetails.exception.EmployeeRuntimeException;
 import com.ideas2it.employeedetails.service.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.InputMismatchException;
 import java.util.List;
 
 /**
@@ -69,7 +71,7 @@ public class TraineeController {
             traineeService.deleteTrainee(id);
             return "Deleted";
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return "No Records Found";
+            throw new EmployeeRuntimeException("No Records Found");
         }
     }
 

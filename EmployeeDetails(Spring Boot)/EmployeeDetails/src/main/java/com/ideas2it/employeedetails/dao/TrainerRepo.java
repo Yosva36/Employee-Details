@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * TrainerDao that uses JpaRepository methods for data manipulation.
  */
-public interface TrainerDao extends JpaRepository<Trainer,Integer> {
+public interface TrainerRepo extends JpaRepository<Trainer,Integer> {
 }

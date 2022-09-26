@@ -1,6 +1,7 @@
 package com.ideas2it.employeedetails.controller;
 
 import com.ideas2it.employeedetails.dto.TrainerDto;
+import com.ideas2it.employeedetails.exception.EmployeeRuntimeException;
 import com.ideas2it.employeedetails.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -68,7 +69,7 @@ public class TrainerController {
             trainerService.deleteTrainer(id);
             return "Deleted";
         } catch (EmptyResultDataAccessException emptyResultDataAccessException){
-            return "Not Deleted";
+            throw new EmployeeRuntimeException("No Records Found");
         }
     }
 
@@ -77,9 +78,4 @@ public class TrainerController {
         trainerService.associateTrainerToTrainees(trainerId, traineeId);
     }
 
-    @GetMapping("/check")
-    @CrossOrigin()
-    public String check(){
-        return "Success";
-    }
 }

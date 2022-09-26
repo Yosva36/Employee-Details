@@ -1,7 +1,6 @@
 package com.ideas2it.employeedetails;
 
 import com.ideas2it.employeedetails.filter.EmployeeFilter;
-import com.ideas2it.employeedetails.filter.SpecificUrlFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -16,11 +15,10 @@ public class EmployeeDetailsApplication extends SpringServletContainerInitialize
 	}
 
 	@Bean
-	FilterRegistrationBean<SpecificUrlFilter> traineeFilterFilterRegistrationBean() {
-		FilterRegistrationBean<SpecificUrlFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-		filterFilterRegistrationBean.setFilter(new SpecificUrlFilter());
+	FilterRegistrationBean<EmployeeFilter> traineeFilterFilterRegistrationBean() {
+		FilterRegistrationBean<EmployeeFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
+		filterFilterRegistrationBean.setFilter(new EmployeeFilter());
 		filterFilterRegistrationBean.addUrlPatterns("/trainees/*");
-
 		return filterFilterRegistrationBean;
 	}
 }
