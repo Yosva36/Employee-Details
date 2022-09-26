@@ -1,10 +1,8 @@
 package com.ideas2it.employeedetails.controller;
 
 import com.ideas2it.employeedetails.dto.TrainerDto;
-import com.ideas2it.employeedetails.exception.EmployeeRuntimeException;
 import com.ideas2it.employeedetails.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,17 +63,13 @@ public class TrainerController {
      */
     @DeleteMapping("/{trainerId}")
     public String deleteTrainer(@PathVariable("trainerId") int id){
-        try {
             trainerService.deleteTrainer(id);
             return "Deleted";
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException){
-            throw new EmployeeRuntimeException("No Records Found");
-        }
     }
 
     @PostMapping("/{trainerId}/{traineeId}")
-    private void associateTrainerToTrainees(@PathVariable int trainerId, @PathVariable int traineeId) {
-        trainerService.associateTrainerToTrainees(trainerId, traineeId);
+    private TrainerDto associateTrainerToTrainees(@PathVariable int trainerId, @PathVariable int traineeId) {
+        return trainerService.associateTrainerToTrainees(trainerId, traineeId);
     }
 
 }

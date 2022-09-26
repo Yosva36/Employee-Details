@@ -13,7 +13,6 @@ import com.ideas2it.employeedetails.service.TraineeService;
 import com.ideas2it.employeedetails.service.TrainerService;
 import com.ideas2it.employeedetails.helper.EmployeeHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,8 +31,6 @@ public class TrainerServiceImpl implements TrainerService {
         this.trainerDao = trainerDao;
         this.traineeService = traineeService;
     }
-
-
 
     /**
      * This method is used to set trainerDto objects to trainee.
@@ -65,7 +62,6 @@ public class TrainerServiceImpl implements TrainerService {
             Trainer presentTrainer = trainer.get();
             trainerDto = EmployeeHelper.trainerToTrainerDto(presentTrainer);
             trainerDto.setTraineesDto(EmployeeHelper.convertTraineeList(presentTrainer.getTrainees()));
-            return trainerDto;
         }
         return trainerDto;
     }
@@ -73,11 +69,10 @@ public class TrainerServiceImpl implements TrainerService {
     /**
      * This method is used to delete a trainer details by id.
      * @param id
-     * @return boolean
      */
     @Override
-    public void deleteTrainer(int id) throws EmptyResultDataAccessException {
-        trainerDao.deleteById(id);
+    public void deleteTrainer(int id) {
+            trainerDao.deleteById(id);
     }
 
     /**
@@ -89,24 +84,28 @@ public class TrainerServiceImpl implements TrainerService {
         return EmployeeHelper.trainerToTrainerDto(trainerDao.save(EmployeeHelper.trainerDtoToTrainer(trainerDto)));
     }
 
+    /**
+     * Associate trainer to trainee
+     * @param trainerId
+     * @param traineeId
+     * @return traineeDto
+     */
     @Override
-    public void associateTrainerToTrainees(int trainerId, int traineeId) {
+    public TrainerDto associateTrainerToTrainees(int trainerId, int traineeId) {
         Optional<Trainer> trainer = trainerDao.findById(trainerId);
         List<Trainee> trainees = new ArrayList<>();
-        Trainer presentTrainer = null;
+        Trainer presentTrainer;
         if (trainer.isPresent()) {
             presentTrainer = trainer.get();
             Trainee trainee = traineeService.getTraineeForTrainerService(traineeId);
             if (trainee != null) {
                 trainees.add(trainee);
+                presentTrainer.setTrainees(trainees);
+               return EmployeeHelper.trainerToTrainerDto(trainerDao.save(presentTrainer));
             }
         }
-        if (presentTrainer != null) {
-            presentTrainer.setTrainees(trainees);
-        }
-        if (presentTrainer != null) {
-            trainerDao.save(presentTrainer);
-        }
+        return null;
     }
+
 }
 

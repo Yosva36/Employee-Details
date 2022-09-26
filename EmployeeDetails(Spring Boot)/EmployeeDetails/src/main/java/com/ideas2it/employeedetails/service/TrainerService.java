@@ -20,5 +20,5 @@ public interface TrainerService {
 
     TrainerDto updateTrainer(TrainerDto trainerDto);
 
-    void associateTrainerToTrainees(int trainerId, int traineeId);
+    TrainerDto associateTrainerToTrainees(int trainerId, int traineeId);
 }

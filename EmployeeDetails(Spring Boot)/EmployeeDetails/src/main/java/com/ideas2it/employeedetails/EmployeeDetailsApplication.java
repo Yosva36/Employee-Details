@@ -9,16 +9,19 @@ import org.springframework.web.SpringServletContainerInitializer;
 
 @SpringBootApplication
 public class EmployeeDetailsApplication extends SpringServletContainerInitializer {
+	private final EmployeeFilter employeeFilter;
+	public EmployeeDetailsApplication(EmployeeFilter employeeFilter) {
+		this.employeeFilter = employeeFilter;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EmployeeDetailsApplication.class, args);
 	}
-
 	@Bean
 	FilterRegistrationBean<EmployeeFilter> traineeFilterFilterRegistrationBean() {
 		FilterRegistrationBean<EmployeeFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-		filterFilterRegistrationBean.setFilter(new EmployeeFilter());
-		filterFilterRegistrationBean.addUrlPatterns("/trainees/*");
+		filterFilterRegistrationBean.setFilter(employeeFilter);
+		filterFilterRegistrationBean.addUrlPatterns("/trainees");
 		return filterFilterRegistrationBean;
 	}
 }
