@@ -1,5 +1,8 @@
 package com.ideas2it.employeedetails.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,6 +21,9 @@ import java.time.Period;
  */
 @Entity
 @Table (name = "trainee_details")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Trainee {
 
     @Id

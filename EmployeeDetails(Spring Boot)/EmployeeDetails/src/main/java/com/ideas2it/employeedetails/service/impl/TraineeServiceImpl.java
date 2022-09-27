@@ -3,9 +3,12 @@ package com.ideas2it.employeedetails.service.impl;
 import com.ideas2it.employeedetails.dao.TraineeRepo;
 import com.ideas2it.employeedetails.dto.TraineeDto;
 import com.ideas2it.employeedetails.entity.Trainee;
+import com.ideas2it.employeedetails.entity.Trainer;
 import com.ideas2it.employeedetails.helper.EmployeeHelper;
 import com.ideas2it.employeedetails.service.TraineeService;
+import com.ideas2it.employeedetails.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +23,13 @@ public class TraineeServiceImpl implements TraineeService {
 
     private final TraineeRepo traineeDao;
 
+    private final TrainerService trainerService;
+
 
     @Autowired
-    public TraineeServiceImpl(TraineeRepo traineeDao) {
+    public TraineeServiceImpl(TraineeRepo traineeDao, @Lazy TrainerService trainerService) {
         this.traineeDao = traineeDao;
+        this.trainerService = trainerService;
     }
 
     /**
@@ -90,10 +96,22 @@ public class TraineeServiceImpl implements TraineeService {
      * @return trainee
      */
     @Override
-    public Trainee getTraineeForTrainerService(int id) {
-        Optional<Trainee> trainee = traineeDao.findById(id);
-        if (trainee.isPresent()){
-            return trainee.get();
+    public Trainee getTraineeForAssociation(int id){
+        return traineeDao.findById(id).orElse(null);
+    }
+
+    @Override
+    public TraineeDto associateTrainerToTrainees(int traineeId, int trainerId) {
+        Optional<Trainee> trainee = traineeDao.findById(traineeId);
+        Trainee presentTrainee;
+        if (trainee.isPresent()) {
+            presentTrainee = trainee.get();
+            List<Trainer> trainers = presentTrainee.getTrainers();
+            Trainer trainer = trainerService.getTrainerForAssociation(trainerId);
+            if (trainer != null) {
+                trainers.add(trainer);
+                return EmployeeHelper.traineeToTraineeDto(traineeDao.save(presentTrainee));
+            }
         }
         return null;
     }

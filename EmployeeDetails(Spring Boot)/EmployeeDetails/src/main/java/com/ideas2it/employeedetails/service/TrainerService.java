@@ -20,5 +20,7 @@ public interface TrainerService {
 
     TrainerDto updateTrainer(TrainerDto trainerDto);
 
+    Trainer getTrainerForAssociation(int id);
+
     TrainerDto associateTrainerToTrainees(int trainerId, int traineeId);
 }

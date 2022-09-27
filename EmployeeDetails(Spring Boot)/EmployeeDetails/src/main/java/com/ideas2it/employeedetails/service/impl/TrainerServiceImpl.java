@@ -85,6 +85,17 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     /**
+     * Get trainer to TraineeService for Association
+     * @param id
+     * @return trainer
+     */
+    @Override
+    public Trainer getTrainerForAssociation(int id) {
+        Optional<Trainer> trainer = trainerDao.findById(id);
+        return trainer.orElse(null);
+    }
+
+    /**
      * Associate trainer to trainee
      * @param trainerId
      * @param traineeId
@@ -93,14 +104,13 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public TrainerDto associateTrainerToTrainees(int trainerId, int traineeId) {
         Optional<Trainer> trainer = trainerDao.findById(trainerId);
-        List<Trainee> trainees = new ArrayList<>();
         Trainer presentTrainer;
         if (trainer.isPresent()) {
             presentTrainer = trainer.get();
-            Trainee trainee = traineeService.getTraineeForTrainerService(traineeId);
+            List<Trainee> trainees = presentTrainer.getTrainees();
+            Trainee trainee = traineeService.getTraineeForAssociation(traineeId);
             if (trainee != null) {
                 trainees.add(trainee);
-                presentTrainer.setTrainees(trainees);
                return EmployeeHelper.trainerToTrainerDto(trainerDao.save(presentTrainer));
             }
         }

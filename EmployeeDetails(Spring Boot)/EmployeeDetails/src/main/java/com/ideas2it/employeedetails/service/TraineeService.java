@@ -1,6 +1,7 @@
 package com.ideas2it.employeedetails.service;
 
 import com.ideas2it.employeedetails.dto.TraineeDto;
+import com.ideas2it.employeedetails.dto.TrainerDto;
 import com.ideas2it.employeedetails.entity.Trainee;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface TraineeService {
     
     TraineeDto updateTrainee(TraineeDto traineeDto);
 
-    Trainee getTraineeForTrainerService(int id);
+    Trainee getTraineeForAssociation(int id);
+
+    TraineeDto associateTrainerToTrainees(int traineeId, int trainerId);
 }

@@ -67,6 +67,13 @@ public class TrainerController {
             return "Deleted";
     }
 
+    /**
+     * Associate trainer to trainee
+     * @param trainerId
+     * @param traineeId
+     * @return
+     */
+
     @PostMapping("/{trainerId}/{traineeId}")
     private TrainerDto associateTrainerToTrainees(@PathVariable int trainerId, @PathVariable int traineeId) {
         return trainerService.associateTrainerToTrainees(trainerId, traineeId);

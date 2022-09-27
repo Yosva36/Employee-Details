@@ -1,5 +1,8 @@
 package com.ideas2it.employeedetails.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
@@ -11,6 +14,9 @@ import java.util.List;
  */
 @Entity
 @Table (name = "trainer_details")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Trainer {
 
     @Id
@@ -38,7 +44,7 @@ public class Trainer {
     @Column (name = "total_projects")
     private int totalProjectsDone;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "trainee_trainer",
             joinColumns = {@JoinColumn (name = "trainer_id")},
             inverseJoinColumns = { @JoinColumn(name = "trainee_id") })
