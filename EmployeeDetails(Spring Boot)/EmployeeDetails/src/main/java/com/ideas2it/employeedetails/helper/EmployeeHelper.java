@@ -90,8 +90,8 @@ public class EmployeeHelper {
             traineeDto.setMailId(trainee.getMailId());
             traineeDto.setPhoneNumber(trainee.getPhoneNumber());
             traineeDto.setGender(trainee.getGender());
-            traineeDto.setCurrentTask(trainee.getCurrentTask());
             traineeDto.setDateOfBirth(trainee.getDateOfBirth());
+            traineeDto.setCurrentTask(trainee.getCurrentTask());
             return traineeDto;
         }
         return null;
@@ -99,7 +99,6 @@ public class EmployeeHelper {
 
     /**
      * Convert trainee list trainee Dto list
-     * @param List<Trainee> trainees
      * @return List<TraineeDto>
      */
     public static List<TraineeDto> convertTraineeList(List<Trainee> trainees) {

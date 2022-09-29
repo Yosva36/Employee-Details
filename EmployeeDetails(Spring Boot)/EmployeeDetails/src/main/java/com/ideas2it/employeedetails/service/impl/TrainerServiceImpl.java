@@ -56,12 +56,14 @@ public class TrainerServiceImpl implements TrainerService {
      */
     @Override
     public TrainerDto getTrainerById(int id) {
-        Optional<Trainer> trainer = trainerDao.findById(id);
+        Optional<Trainer> trainerResult = trainerDao.findById(id);
         TrainerDto trainerDto = null;
-        if (trainer.isPresent()) {
-            Trainer presentTrainer = trainer.get();
-            trainerDto = EmployeeHelper.trainerToTrainerDto(presentTrainer);
-            trainerDto.setTraineesDto(EmployeeHelper.convertTraineeList(presentTrainer.getTrainees()));
+        if (trainerResult.isPresent()) {
+            Trainer trainer = trainerResult.get();
+            trainerDto = EmployeeHelper.trainerToTrainerDto(trainer);
+            if(trainerDto != null && trainer.getTrainees() != null && !trainer.getTrainees().isEmpty()) {
+                trainerDto.getTraineesDto().addAll(trainer.getTrainees().stream().map(EmployeeHelper::traineeToTraineeDto).collect(Collectors.toList()));
+            }
         }
         return trainerDto;
     }
