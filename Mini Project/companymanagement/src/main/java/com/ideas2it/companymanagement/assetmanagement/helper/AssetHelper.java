@@ -28,7 +28,7 @@ public class AssetHelper {
         AssetDetails assetDetails = new AssetDetails();
         assetDetails.setAssetName(assetDetailsDto.getAssetName());
         assetDetails.setSerialNumber(assetDetailsDto.getSerialNumber());
-        assetDetails.setAsset(assetDtoToAsset(assetDetailsDto.getAssetDto()));
+        assetDetails.setAssetType(assetDtoToAsset(assetDetailsDto.getAssetDto()));
         //Need Employee object
         return assetDetails;
     }
@@ -38,7 +38,7 @@ public class AssetHelper {
             AssetDetailsDto assetDetailsDto = new AssetDetailsDto();
             assetDetailsDto.setAssetName(assetDetails.getAssetName());
             assetDetailsDto.setSerialNumber(assetDetails.getSerialNumber());
-            assetDetailsDto.setAssetDto(assetToAssetDto(assetDetails.getAsset()));
+            assetDetailsDto.setAssetDto(assetToAssetDto(assetDetails.getAssetType()));
             //Need Employee object
             return assetDetailsDto;
         }
