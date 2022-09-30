@@ -1,11 +1,14 @@
 package com.ideas2it.employeedetails.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.ManyToMany;
@@ -24,7 +27,7 @@ import java.time.Period;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Trainee {
+public class Trainee implements Serializable {
 
     @Id
     @GeneratedValue
@@ -50,6 +53,7 @@ public class Trainee {
     private String currentTask;
 
     @ManyToMany(mappedBy="trainees")
+    //@JsonBackReference
     private List<Trainer> trainers = new ArrayList<Trainer>();
 
     public Trainee(String traineeId, String name, String gender,

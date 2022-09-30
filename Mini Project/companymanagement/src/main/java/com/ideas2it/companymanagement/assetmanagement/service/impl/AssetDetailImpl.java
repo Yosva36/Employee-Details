@@ -4,7 +4,6 @@ import com.ideas2it.companymanagement.assetmanagement.dao.AssetDetailRepo;
 import com.ideas2it.companymanagement.assetmanagement.dto.AssetDetailsDto;
 import com.ideas2it.companymanagement.assetmanagement.helper.AssetHelper;
 import com.ideas2it.companymanagement.assetmanagement.service.AssetDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

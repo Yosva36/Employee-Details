@@ -1,6 +1,7 @@
 package com.ideas2it.employeedetails.controller;
 
 import com.ideas2it.employeedetails.dto.TrainerDto;
+import com.ideas2it.employeedetails.entity.Trainer;
 import com.ideas2it.employeedetails.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class TrainerController {
      * @param id
      */
     @GetMapping("/{trainerId}")
-    public TrainerDto getTrainerById (@PathVariable("trainerId") int id){
+    public Trainer getTrainerById (@PathVariable("trainerId") int id){
         return trainerService.getTrainerById(id);
     }
 
@@ -44,7 +45,7 @@ public class TrainerController {
      * @return List<TrainerDto>
      */
     @GetMapping
-    public List<TrainerDto> getAllTrainers(){
+    public List<Trainer> getAllTrainers(){
         return trainerService.getTrainers();
     }
 

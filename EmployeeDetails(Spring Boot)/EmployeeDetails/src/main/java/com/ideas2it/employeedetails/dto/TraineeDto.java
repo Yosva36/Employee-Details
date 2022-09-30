@@ -1,7 +1,11 @@
 package com.ideas2it.employeedetails.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ideas2it.employeedetails.constants.EmployeeConstants;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -11,7 +15,10 @@ import java.util.List;
  *  Deals with trainee dto
  *  to carry objects to the Controller to Service
  */
-public class TraineeDto {
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class TraineeDto implements Serializable {
 
     private int id;
     private String traineeId;
@@ -124,13 +131,4 @@ public class TraineeDto {
         this.trainersDto = trainersDto;
     }
 
-    public String toString() {
-       return ("ID           : " + getTraineeId() + "\n" + "Name         : " + getName()
-                + "\n" + "Gender       : " + getGender() + "\n" + "Age          : " 
-                + getAge() + "\n" + "Phone Number : " 
-                + getPhoneNumber() + "\n" + "Mail ID      : " + getMailId()
-                + "\n" + "Blood Group  : " + getBloodGroup() + "\n" 
-                + "Current Task : " + getCurrentTask() + "\n" 
-                + "Company Name : " + EmployeeConstants.COMPANY_NAME + "\n");
-    }
 }

@@ -1,7 +1,7 @@
 package com.ideas2it.companymanagement.assetmanagement.service.impl;
 
 import com.ideas2it.companymanagement.assetmanagement.dao.AssetRepo;
-import com.ideas2it.companymanagement.assetmanagement.dto.AssetDto;
+import com.ideas2it.companymanagement.assetmanagement.dto.AssetTypeDto;
 import com.ideas2it.companymanagement.assetmanagement.helper.AssetHelper;
 import com.ideas2it.companymanagement.assetmanagement.service.AssetService;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,12 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public AssetDto setAsset(AssetDto assetDto) {
+    public AssetTypeDto setAsset(AssetTypeDto assetDto) {
         return AssetHelper.assetToAssetDto(assetRepo.save(AssetHelper.assetDtoToAsset(assetDto)));
     }
 
     @Override
-    public AssetDto getAsset(int id) {
+    public AssetTypeDto getAsset(int id) {
         return AssetHelper.assetToAssetDto(assetRepo.findById(id).orElse(null));
     }
 
@@ -38,12 +38,12 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public AssetDto updateAsset(AssetDto assetDto) {
+    public AssetTypeDto updateAsset(AssetTypeDto assetDto) {
         return AssetHelper.assetToAssetDto(assetRepo.save(AssetHelper.assetDtoToAsset(assetDto)));
     }
 
     @Override
-    public List<AssetDto> getAllAssetDetails() {
+    public List<AssetTypeDto> getAllAssetDetails() {
         return assetRepo.findAll().stream().map(AssetHelper::assetToAssetDto).collect(Collectors.toList());
     }
 

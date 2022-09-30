@@ -1,18 +1,18 @@
 package com.ideas2it.companymanagement.assetmanagement.service;
 
-import com.ideas2it.companymanagement.assetmanagement.dto.AssetDto;
+import com.ideas2it.companymanagement.assetmanagement.dto.AssetTypeDto;
 
 import java.util.List;
 
 public interface AssetService {
 
-    AssetDto setAsset(AssetDto assetDto);
+    AssetTypeDto setAsset(AssetTypeDto assetDto);
 
-    AssetDto getAsset(int id);
+    AssetTypeDto getAsset(int id);
 
     boolean deleteAsset(int id);
 
-    AssetDto updateAsset(AssetDto assetDto);
+    AssetTypeDto updateAsset(AssetTypeDto assetDto);
 
-    List<AssetDto> getAllAssetDetails();
+    List<AssetTypeDto> getAllAssetDetails();
 }

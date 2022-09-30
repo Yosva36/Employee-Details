@@ -1,6 +1,5 @@
 package com.ideas2it.employeedetails.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,26 +45,28 @@ public class TrainerServiceImpl implements TrainerService {
      * @return List<TrainerDto>
      */
     @Override
-    public List<TrainerDto> getTrainers() {
-        return trainerDao.findAll().stream().map(EmployeeHelper::trainerToTrainerDto).collect(Collectors.toList());
+    public List<Trainer> getTrainers() {
+        return trainerDao.findAll();
+        //return trainerDao.findAll().stream().map(EmployeeHelper::trainerToTrainerDto).collect(Collectors.toList());
     }
 
     /**
      * This method is used to get a trainee details by id.
+     *
      * @return trainerDto
      */
     @Override
-    public TrainerDto getTrainerById(int id) {
+    public Trainer getTrainerById(int id) {
         Optional<Trainer> trainerResult = trainerDao.findById(id);
         TrainerDto trainerDto = null;
         if (trainerResult.isPresent()) {
             Trainer trainer = trainerResult.get();
             trainerDto = EmployeeHelper.trainerToTrainerDto(trainer);
-            if(trainerDto != null && trainer.getTrainees() != null && !trainer.getTrainees().isEmpty()) {
+         /*   if(trainerDto != null && trainer.getTrainees() != null && !trainer.getTrainees().isEmpty()) {
                 trainerDto.getTraineesDto().addAll(trainer.getTrainees().stream().map(EmployeeHelper::traineeToTraineeDto).collect(Collectors.toList()));
-            }
+            }*/
         }
-        return trainerDto;
+        return trainerResult.get();
     }
 
     /**

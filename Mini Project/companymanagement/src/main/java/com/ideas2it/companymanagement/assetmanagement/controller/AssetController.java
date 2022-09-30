@@ -1,6 +1,6 @@
 package com.ideas2it.companymanagement.assetmanagement.controller;
 
-import com.ideas2it.companymanagement.assetmanagement.dto.AssetDto;
+import com.ideas2it.companymanagement.assetmanagement.dto.AssetTypeDto;
 import com.ideas2it.companymanagement.assetmanagement.service.AssetService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +17,17 @@ public class AssetController {
     }
 
     @GetMapping("/{assetId}")
-    private AssetDto getAsset(@PathVariable("assetId") int id) {
+    private AssetTypeDto getAsset(@PathVariable("assetId") int id) {
        return assetService.getAsset(id);
     }
 
     @PostMapping
-    private AssetDto insertAsset(AssetDto assetDto) {
+    private AssetTypeDto insertAsset(AssetTypeDto assetDto) {
         return assetService.setAsset(assetDto);
     }
 
     @PutMapping
-    private AssetDto updateAsset(AssetDto assetDto) {
+    private AssetTypeDto updateAsset(AssetTypeDto assetDto) {
         return assetService.updateAsset(assetDto);
     }
 
@@ -37,7 +37,7 @@ public class AssetController {
     }
 
     @GetMapping
-    private List<AssetDto> getAllAssets() {
+    private List<AssetTypeDto> getAllAssets() {
         return assetService.getAllAssetDetails();
     }
 }

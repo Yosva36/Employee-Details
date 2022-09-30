@@ -1,25 +1,25 @@
 package com.ideas2it.companymanagement.assetmanagement.helper;
 
 import com.ideas2it.companymanagement.assetmanagement.dto.AssetDetailsDto;
-import com.ideas2it.companymanagement.assetmanagement.dto.AssetDto;
+import com.ideas2it.companymanagement.assetmanagement.dto.AssetTypeDto;
 import com.ideas2it.companymanagement.assetmanagement.entity.AssetType;
 import com.ideas2it.companymanagement.assetmanagement.entity.AssetDetails;
 
 public class AssetHelper {
 
-    public static AssetType assetDtoToAsset(AssetDto assetDto) {
+    public static AssetType assetDtoToAsset(AssetTypeDto assetTypeDto) {
         AssetType assetType = new AssetType();
-        assetType.setAssetType(assetDto.getAssetType());
-        assetType.setAssetDetails(assetDetailsDtoToAssetDetails(assetDto.getAssetDetailsDto()));
+        assetType.setAssetType(assetTypeDto.getAssetType());
+        assetType.setAssetDetails(assetDetailsDtoToAssetDetails(assetTypeDto.getAssetDetailsDto()));
         return assetType;
     }
 
-    public static AssetDto assetToAssetDto(AssetType assetType) {
+    public static AssetTypeDto assetToAssetDto(AssetType assetType) {
         if (assetType != null) {
-            AssetDto assetDto = new AssetDto();
-            assetDto.setAssetType(assetType.getAssetType());
-            assetDto.setAssetDetailsDto(assetDetailsToAssetDetailsDto(assetType.getAssetDetails()));
-            return assetDto;
+            AssetTypeDto assetTypeDto = new AssetTypeDto();
+            assetTypeDto.setAssetType(assetType.getAssetType());
+            assetTypeDto.setAssetDetailsDto(assetDetailsToAssetDetailsDto(assetType.getAssetDetails()));
+            return assetTypeDto;
         }
         return null;
     }

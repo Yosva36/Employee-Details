@@ -14,7 +14,7 @@ public interface TraineeService {
 
     TraineeDto setTrainee(TraineeDto traineeDto);
 
-    List<TraineeDto> getTrainees();
+    List<Trainee> getTrainees();
 
     TraineeDto getTraineeById(int id);
 

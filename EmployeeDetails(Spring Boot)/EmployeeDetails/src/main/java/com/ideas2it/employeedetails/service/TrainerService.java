@@ -12,9 +12,9 @@ public interface TrainerService {
 
     TrainerDto setTrainer(TrainerDto traineeDto);
 
-    List<TrainerDto> getTrainers();
+    List<Trainer> getTrainers();
 
-    TrainerDto getTrainerById(int id);
+    Trainer getTrainerById(int id);
 
     void deleteTrainer(int id);
 

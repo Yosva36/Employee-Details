@@ -46,7 +46,7 @@ public class TraineeController {
      * @return List<TraineeDto>
      */
     @GetMapping
-    public List<TraineeDto> getAllTrainees(){
+    public List<Trainee> getAllTrainees(){
         return traineeService.getTrainees();
     }
 

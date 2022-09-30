@@ -1,10 +1,12 @@
 package com.ideas2it.employeedetails.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -15,7 +17,10 @@ import java.util.List;
  */
 @Entity
 @Table (name = "trainer_details")
-public class Trainer {
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Trainer implements Serializable {
 
     @Id
     @GeneratedValue
@@ -46,6 +51,7 @@ public class Trainer {
     @JoinTable(name = "trainee_trainer",
             joinColumns = {@JoinColumn (name = "trainer_id")},
             inverseJoinColumns = { @JoinColumn(name = "trainee_id") })
+    //@JsonManagedReference
     private List<Trainee> trainees = new ArrayList<Trainee>();
 
     public Trainer() {

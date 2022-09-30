@@ -48,8 +48,9 @@ public class TraineeServiceImpl implements TraineeService {
      * @return List<TraineeDto>
      */
     @Override
-    public List<TraineeDto> getTrainees() {
-        return traineeDao.findAll().stream().map(EmployeeHelper::traineeToTraineeDto).collect(Collectors.toList());
+    public List<Trainee> getTrainees() {
+        return traineeDao.findAll();
+       // return traineeDao.findAll().stream().map(EmployeeHelper::traineeToTraineeDto).collect(Collectors.toList());
     }
 
     /**

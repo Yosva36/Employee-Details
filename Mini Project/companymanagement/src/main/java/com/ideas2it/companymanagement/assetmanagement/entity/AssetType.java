@@ -1,12 +1,14 @@
 package com.ideas2it.companymanagement.assetmanagement.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "asset")
-@Data
+@Getter
+@Setter
 public class AssetType {
 
     @Id
@@ -16,7 +18,7 @@ public class AssetType {
     @Column(name = "asset_type")
     private String assetType;
 
-    @OneToOne(mappedBy = "asset")
+    @OneToOne(mappedBy = "assetType")
     private AssetDetails assetDetails;
 }
 

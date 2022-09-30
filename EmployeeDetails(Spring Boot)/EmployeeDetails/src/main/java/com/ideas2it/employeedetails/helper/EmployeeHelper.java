@@ -51,6 +51,7 @@ public class EmployeeHelper {
             trainerDto.setDateOfBirth(trainer.getDateOfBirth());
             trainerDto.setDateOfJoin(trainer.getDateOfJoin());
             trainerDto.setTotalProjectsDone(trainer.getTotalProjectsDone());
+            trainerDto.setTraineesDto(convertTraineeList(trainer.getTrainees()));
             return trainerDto;
         }
         return null;
